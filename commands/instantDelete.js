@@ -8,19 +8,19 @@ module.exports = {
             option.setName('個数')
                 .setDescription('何個消すか')
                 .setRequired(true)
-                .setMinValue(1)
-                .setMaxValue(100)),
+                .setMinValue(2)
+                .setMaxValue(99)),
     async execute(interaction) {
         if (!interaction.isChatInputCommand()) return;
         await interaction.deferReply();
 
         try {
             const amount = interaction.options.getInteger('個数');
-            const maxAmount = await interaction.channel.messages.fetch({limit:100}).then(messages => messages.size);
+            const maxAmount = await interaction.channel.messages.fetch({limit:99}).then(messages => messages.size);
 
             const targetAmount = Math.min(amount, maxAmount);
 
-            await interaction.channel.bulkDelete(targetAmount);
+            await interaction.channel.bulkDelete(targetAmount + 1);
 
             await interaction.channel.send(`${interaction.channel.name} に投稿されたメッセージを ${targetAmount}個 削除しました。`);
         } catch (error) {
