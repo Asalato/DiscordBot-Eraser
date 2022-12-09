@@ -3,7 +3,7 @@ const path = require('node:path');
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const {registerCommands} = require("./register");
 const GuildStore = require("./guildStore");
-const {temporaryMethodThatGetMessageByFetchingLatestChannelPost} = require("./utils");
+const {rebootRefresh} = require("./rebootRefresh");
 require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages] });
@@ -49,12 +49,6 @@ client.on('guildCreate', async guild => {
     await registerCommands(id);
 });
 
-/*client.on('messageCreate', async message => {
-    if (message.author.bot) return false;
-    await temporaryMethodThatGetMessageByFetchingLatestChannelPost(message);
-    console.log(`${message.author.tag} in #${message.channel.name} send a message: ${message.content} at ${message.createdAt.toLocaleString()}`);
-});*/
-
 (async () => {
     const ids = await GuildStore.getAllIds();
     for (const id of ids) {
@@ -62,4 +56,5 @@ client.on('guildCreate', async guild => {
     }
 })();
 
-client.login(process.env.DISCORD_TOKEN);
+await rebootRefresh(client);
+await client.login(process.env.DISCORD_TOKEN);

@@ -17,6 +17,11 @@ module.exports = class EraseTargetStore {
         data = JSON.parse(fs.readFileSync(fileName, 'utf-8'));
     }
 
+    static getAllData() {
+        if (data == null) this.#load();
+        return data;
+    }
+
     static async isTarget(guildId, channelId) {
         if (data == null) this.#load();
         if (!data.hasOwnProperty(guildId)) return false;
