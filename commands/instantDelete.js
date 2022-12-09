@@ -7,16 +7,22 @@ module.exports = {
         .addIntegerOption(option =>
             option.setName('個数')
                 .setDescription('何個消すか')
-                .setRequired(true)),
+                .setRequired(true)
+                .setMinValue(1)
+                .setMaxValue(100)),
     async execute(interaction) {
         if (!interaction.isChatInputCommand()) return;
         await interaction.deferReply();
 
         try {
             const amount = interaction.options.getInteger('個数');
-            await interaction.channel.bulkDelete(amount);
+            const maxAmount = await interaction.channel.fetchMessage({limit:100}).then(messages => messages.size);
 
-            await interaction.channel.send(`${interaction.channel.name} に投稿されたメッセージを ${amount}個 削除しました。`);
+            const targetAmount = Math.min(amount, maxAmount);
+
+            await interaction.channel.bulkDelete(targetAmount);
+
+            await interaction.channel.send(`${interaction.channel.name} に投稿されたメッセージを ${targetAmount}個 削除しました。`);
         } catch (error) {
             console.error(error);
             await interaction.editReply("何故かコマンドの実行に失敗しました");
