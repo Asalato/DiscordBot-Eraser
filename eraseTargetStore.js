@@ -30,7 +30,9 @@ module.exports = class EraseTargetStore {
         if (data.hasOwnProperty(guildId)) {
             guildData = data[guildId];
         }
-        guildData.push(channelId);
+        if (!guildData.includes(channelId)) {
+            guildData.push(channelId);
+        }
         data[guildId] = guildData;
 
         this.#save();
