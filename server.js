@@ -49,11 +49,11 @@ client.on('guildCreate', async guild => {
     await registerCommands(id);
 });
 
-client.on('messageCreate', async message => {
+/*client.on('messageCreate', async message => {
     if (message.author.bot) return false;
     await temporaryMethodThatGetMessageByFetchingLatestChannelPost(message);
     console.log(`${message.author.tag} in #${message.channel.name} send a message: ${message.content} at ${message.createdAt.toLocaleString()}`);
-});
+});*/
 
 (async () => {
     const ids = await GuildStore.getAllIds();
