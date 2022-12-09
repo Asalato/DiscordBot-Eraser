@@ -56,5 +56,5 @@ client.on('guildCreate', async guild => {
     }
 })();
 
-await rebootRefresh(client);
-await client.login(process.env.DISCORD_TOKEN);
+rebootRefresh(client);
+client.login(process.env.DISCORD_TOKEN);
