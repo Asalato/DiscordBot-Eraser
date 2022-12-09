@@ -56,5 +56,6 @@ client.on('guildCreate', async guild => {
     }
 })();
 
-rebootRefresh(client);
 client.login(process.env.DISCORD_TOKEN);
+
+rebootRefresh(client);
