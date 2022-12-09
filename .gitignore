@@ -105,5 +105,5 @@ dist
 
 .env
 
-.guildStore
-.eraseTargetStore
+data/.guildStore
+data/.eraseTargetStore
