@@ -1,11 +1,10 @@
 const EraseTargetStore = require("./eraseTargetStore");
-const {Client} = require("discord.js");
 const {fetchAllMessages} = require("./utils");
 
 const limit = 30 * 60 * 1000;
 
 module.exports = {
-    rebootRefresh: async (client: Client) => {
+    rebootRefresh: async (client) => {
         const data = EraseTargetStore.getAllData()
         Object.keys(data).forEach(guildId => {
             const guild = client.guilds.fetch(guildId);
