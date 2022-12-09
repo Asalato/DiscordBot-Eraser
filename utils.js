@@ -36,6 +36,7 @@ module.exports = {
         let message = await channel.messages
             .fetch({ limit: 1 })
             .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
+        messages.push(message);
 
         while (message) {
             await channel.messages
