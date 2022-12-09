@@ -16,7 +16,7 @@ module.exports = {
 
         try {
             const amount = interaction.options.getInteger('個数');
-            const maxAmount = await interaction.channel.fetchMessage({limit:100}).then(messages => messages.size);
+            const maxAmount = await interaction.channel.fetchMessages({limit:100}).then(messages => messages.size);
 
             const targetAmount = Math.min(amount, maxAmount);
 
