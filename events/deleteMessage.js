@@ -1,4 +1,3 @@
-const {trySimpleReplyWhenContainsArray} = require("../utils");
 const EraseTargetStore = require("../eraseTargetStore");
 
 module.exports = {
@@ -12,6 +11,6 @@ module.exports = {
 
         setTimeout(() => {
             message.delete();
-        }, 30 /* 60*/ * 1000);
+        }, 30 * 60 * 1000);
     },
 };

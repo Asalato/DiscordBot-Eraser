@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 let data = null;
-const fileName = 'data/.eraseTargetStore';
+const fileName = './data/.eraseTargetStore';
 
 module.exports = class EraseTargetStore {
     static #save() {

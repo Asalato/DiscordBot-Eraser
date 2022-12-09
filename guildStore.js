@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 let data = null;
-const fileName = 'data/.guildStore';
+const fileName = './data/.guildStore';
 
 module.exports = class GuildStore {
     static #save() {
