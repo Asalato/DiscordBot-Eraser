@@ -7,7 +7,7 @@ module.exports = {
     rebootRefresh: async (client) => {
         const data = EraseTargetStore.getAllData()
         Object.keys(data).forEach(guildId => {
-            const guild = client.guilds.fetch(guildId);
+            const guild = client.guilds.cache.get(guildId);
 
             data[guildId].forEach(async channelId => {
                 const channel = guild.channels.fetch(channelId);
