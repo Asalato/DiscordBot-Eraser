@@ -105,5 +105,4 @@ dist
 
 .env
 
-data/.guildStore
-data/.eraseTargetStore
+data/
