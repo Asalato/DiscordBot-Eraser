@@ -12,6 +12,7 @@ module.exports = {
                 const channel = await guild.channels.fetch(channelId);
                 const messages = await fetchAllMessages(channel);
                 messages.forEach(message => {
+                    if (!message) return;
                     const diff = new Date() - message.createdAt;
                     if (diff > limit) {
                         message.delete();
