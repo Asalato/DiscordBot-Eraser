@@ -4,6 +4,7 @@ const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const {registerCommands} = require("./register");
 const GuildStore = require("./guildStore");
 const {rebootRefresh} = require("./rebootRefresh");
+const reminder = require("./cron/reminder");
 require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages] });
@@ -57,5 +58,5 @@ client.on('guildCreate', async guild => {
 })();
 
 client.login(process.env.DISCORD_TOKEN);
-
+reminder.execute(client);
 rebootRefresh(client);
