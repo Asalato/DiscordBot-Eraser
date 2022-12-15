@@ -27,6 +27,6 @@ module.exports = {
             }
 
             ReminderStore.setAllData(newData)
-        })
+        }, {scheduled: true, timezone:'Asia/Tokyo'});
     }
 }

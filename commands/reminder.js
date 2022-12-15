@@ -35,13 +35,13 @@ module.exports = {
             target = interaction.user;
         }
 
-        const targetDate = new Date();
+        const targetDate = new Date(new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }));
         targetDate.setHours(targetDate.getHours() + hour);
         targetDate.setMinutes(targetDate.getMinutes() + minutes);
 
         const message = `**${target.username}** に対し、 **${targetDate.getHours()}:${targetDate.getMinutes()}** に **${desc}** をリマインドします`;
         const reply = await interaction.reply({content: message, fetchReply: true});
-        
+
         await ReminderStore.addData(interaction.channelId, target.id, targetDate, desc, reply.id);
     },
 };
