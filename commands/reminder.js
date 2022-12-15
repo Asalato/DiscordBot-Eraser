@@ -39,9 +39,9 @@ module.exports = {
         targetDate.setHours(targetDate.getHours() + hour);
         targetDate.setMinutes(targetDate.getMinutes() + minutes);
 
-        await ReminderStore.addData(interaction.channelId, target.id, targetDate, desc, reply.id);
-
         const message = `**${target.username}** に対し、 **${targetDate.getHours()}:${targetDate.getMinutes()}** に **${desc}** をリマインドします`;
         const reply = await interaction.reply({content: message, fetchReply: true});
+        
+        await ReminderStore.addData(interaction.channelId, target.id, targetDate, desc, reply.id);
     },
 };
