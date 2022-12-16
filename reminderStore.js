@@ -30,7 +30,6 @@ module.exports = class ReminderStore {
     static setAllData(newData) {
         data = newData;
         this.#save();
-        console.log(`Reflesh reminder`);
     }
 
     static async addData(channelId, targetUserId, limit, description, messageId) {
