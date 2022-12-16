@@ -4,7 +4,7 @@ const ReminderStore = require("../reminderStore");
 module.exports = {
     execute(client) {
         cron.schedule('* * * * *', async () => {
-            const now = new Date();
+            const now = new Date(new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }));
             const newData = [];
             const data = ReminderStore.getAllData();
 
