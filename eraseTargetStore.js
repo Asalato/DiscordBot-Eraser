@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require("node:path");
 
-let data = null;
+let data = {};
 const fileName = './data/.eraseTargetStore';
 
 module.exports = class EraseTargetStore {
@@ -16,6 +16,8 @@ module.exports = class EraseTargetStore {
     static #load() {
         if (!fs.existsSync(fileName)) {
             data = {};
+            console.log(`No data file found at ${fileName}. Creating a new one.`);
+            this.#save();
             return;
         }
 
@@ -23,18 +25,18 @@ module.exports = class EraseTargetStore {
     }
 
     static getAllData() {
-        if (data == null) this.#load();
+        if (data.length === 0) this.#load();
         return data;
     }
 
     static async isTarget(guildId, channelId) {
-        if (data == null) this.#load();
+        if (data.length === 0) this.#load();
         if (!data.hasOwnProperty(guildId)) return false;
         return data[guildId].includes(channelId);
     }
 
     static async setChannel(guildId, channelId) {
-        if (data == null) this.#load();
+        if (data.length === 0) this.#load();
 
         let guildData = [];
         if (data.hasOwnProperty(guildId)) {
@@ -50,7 +52,7 @@ module.exports = class EraseTargetStore {
     }
 
     static async deleteChannel(guildId, channelId) {
-        if (data == null) this.#load();
+        if (data.length === 0) this.#load();
         if (!data.hasOwnProperty(guildId)) return;
         let guildData = data[guildId];
         guildData = guildData.filter(id => id !== channelId);

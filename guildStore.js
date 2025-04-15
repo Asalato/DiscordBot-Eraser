@@ -1,8 +1,8 @@
 const fs = require('node:fs');
 const path = require("node:path");
 
-let data = null;
-const fileName = './data/.guildStore';
+let data = {};
+const fileName = './data/.eraseTargetStore';
 
 module.exports = class GuildStore {
     static #save() {
@@ -15,7 +15,7 @@ module.exports = class GuildStore {
 
     static #load() {
         if (!fs.existsSync(fileName)) {
-            data = [];
+            data = {};
             return;
         }
 
@@ -23,16 +23,18 @@ module.exports = class GuildStore {
     }
 
     static async getAllIds() {
-        if (data == null) this.#load();
-        return data;
+        if (data.length === 0) this.#load();
+        // eraseTargetStoreのデータからギルドIDのリストを抽出
+        return Object.keys(data);
     }
 
     static async setId(id) {
-        if (data == null) this.#load();
-        if (data.includes(id)) return;
-        data.push(id);
-
-        this.#save();
-        console.log(`Add new Guild Id: ${id}`);
+        if (data.length === 0) this.#load();
+        // データにギルドIDが存在しない場合は空の配列で初期化
+        if (!data.hasOwnProperty(id)) {
+            data[id] = [];
+            this.#save();
+            console.log(`Add new Guild Id: ${id}`);
+        }
     }
 }

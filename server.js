@@ -4,7 +4,7 @@ const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const {registerCommands} = require("./register");
 const GuildStore = require("./guildStore");
 const {rebootRefresh} = require("./rebootRefresh");
-const reminder = require("./cron/reminder");
+const HealthCheckServer = require('./HealthCheckServer');
 require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages] });
@@ -30,6 +30,17 @@ for (const file of eventFiles) {
         client.on(event.name, async (...args) => await event.execute(client, ...args));
     }
 }
+
+const healthCheck = new HealthCheckServer(client);
+
+client.once('ready', async () => {
+    try {
+        await healthCheck.start();
+        console.log('Health check server started');
+    } catch (error) {
+        console.error('Failed to start health check server:', error);
+    }
+});
 
 client.on('interactionCreate', async interaction => {
     const command = client.commands.get(interaction.commandName);
@@ -58,5 +69,5 @@ client.on('guildCreate', async guild => {
 })();
 
 client.login(process.env.DISCORD_TOKEN);
-reminder.execute(client);
+
 rebootRefresh(client);
